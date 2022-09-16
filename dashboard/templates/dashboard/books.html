@@ -1,0 +1,60 @@
+{% extends 'dashboard/base.html' %} 
+{% load static %} 
+{% load crispy_forms_tags %}
+{% block content %}
+
+<section class='text-center container'>
+    <h2>Search books and browse your favorite</h2>
+    <p>just enter the search query to obtain the results</p><b></b>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        {{form|crispy}}
+        <input class="btn btn-danger" type="submit" value="Submit">
+    </form><br>
+
+    {% for br in bookSearchResult%}
+
+    <a href="{{br.preview}}" target="_blank">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-3">
+                        <img class="img-fluid" src="{{br.thumbnail}}" alt="">
+
+                    </div>
+                    <div class="col-md-9">
+                        <h3 class="p-0 m-0">{{br.title}}</h3>
+                        <b>
+                            <u>
+                                {% if br.subtitle %}
+                                <h5 class="p-0 m-0">{{br.subtitle}}</h5>
+                                {% endif %}
+                            </u>
+                        </b>
+                        {% if br.description %}
+                        <h6 class="p-0 m-1">{{br.description}}</h6>
+                        {% endif %}
+                            {% if br.categories %}
+                        <b>
+                            {% for categori in br.categories %}
+                            <h6 class="ml-0 mt-3">Category: {{ categori }}</h6>
+                            {% endfor %}
+                            {% endif %}
+                            {% if br.count %}
+                            <h6 class="ml-0 mt-1">Pages: {{ br.count }}</h6>
+                             {% endif %}
+                            {% if br.rating %}
+                            <h6 class="ml-0 mt-1">Rating:{{br.rating }}</h6>
+                             {% endif %}
+                        </b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+    <br>
+</section>
+
+{% endblock content %}

@@ -1,0 +1,43 @@
+{% extends 'dashboard/base.html' %} 
+{% load static %} 
+{% block content %}
+<section class='text-center container'>
+    <h2>Search Videos in Youtube</h2>
+    <p>search videos and select any video to open in youtube</p>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{form}}
+        <input class="btn btn-danger" type="submit" value="Submit">
+    </form><br>
+    {% for yt in youtubeSearchResult%}
+    <a href="{{  yt.link }}" target="_blank">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-5">
+                        <img class="img-fluid" src="{{ yt.thumbnail}}" alt="">
+
+                    </div>
+                    <div class="col-md-7">
+                        <h3 class="p-0 m-0">{{yt.title}}</h3>
+                        <b>
+                            <u>
+                                <h5 class="p-0 m-0">{{yt.channel}}</h5>
+                            </u>
+                        </b>
+                        <h6 class="p-0 m-1">{{yt.description}}</h6>
+                        <b>
+                            <h6 class="ml-0 mt-3">{{yt.duration}}</h6>
+                            <h6 class="ml-0 mt-1">{{yt.views}}</h6>
+                            <h6 class="ml-0 mt-1">{{yt.published}}</h6>
+                        </b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+    <br>
+    {% endfor %}
+</section>
+
+{% endblock content %}
